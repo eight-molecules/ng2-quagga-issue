@@ -1,31 +1,9 @@
-# Quagga
+This repo is a reproduction of a bug in Angular 2's change detection I came across while implementing QuaggaJS in a component.
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.20-4.
+To run:
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+    Clone the repo
+    Run npm install to install the project (This project uses the Angular CLI)
+    Run node_modules\.bin\ng s -h 0.0.0.0 to start a dev server on all interfaces
+    Browse to your dev server running on port 4200 using a device capable of running Quagga livestream code (I've used an Asus ZenPad 8 with Firefox Mobile)
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Deploying to Github Pages
-
-Run `ng github-pages:deploy` to deploy to Github Pages.
-
-## Further help
-
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
