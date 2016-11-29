@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 declare var Quagga: any;
 
@@ -8,7 +8,13 @@ declare var Quagga: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  private lastResult = "null";
+  private lastResult = "No Changes";
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['lastResult']) {
+      console.log(this.lastResult);
+    }
+  }
 
   ngOnInit() {
     let state = {
@@ -77,6 +83,5 @@ export class AppComponent implements OnInit {
 
   logCode(code) {
     this.lastResult = code;
-    console.log(this.lastResult);
   }
 }
