@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 
 declare var Quagga: any;
 
@@ -9,6 +9,31 @@ declare var Quagga: any;
 })
 export class AppComponent implements OnInit {
   private lastResult = "No Changes";
+  private state = {
+    inputStream: {
+      type : "LiveStream",
+      constraints: {
+        width: {min: 640},
+        height: {min: 480},
+        facingMode: "environment",
+        aspectRatio: {min: 1, max: 2}
+      }
+    },
+    locator: {
+      patchSize: "medium",
+      halfSample: true
+    },
+    numOfWorkers: 0,
+    decoder: {
+      readers : [{
+        format: "code_128_reader",
+        config: {}
+      }]
+    },
+    locate: true
+  };
+
+  constructor(private ref: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['lastResult']) {
@@ -17,43 +42,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
-    let state = {
-      inputStream: {
-        type : "LiveStream",
-        constraints: {
-          width: {min: 640},
-          height: {min: 480},
-          facingMode: "environment",
-          aspectRatio: {min: 1, max: 2}
-        }
-      },
-      locator: {
-        patchSize: "medium",
-        halfSample: true
-      },
-      numOfWorkers: 4,
-      decoder: {
-        readers : [{
-          format: "code_128_reader",
-          config: {}
-        }]
-      },
-      locate: true
-    };
-
-    Quagga.init(state, (err) => {
+    Quagga.init(this.state, (err) => {
       if (err) {
         return console.log(err);
       }
-
       Quagga.start();
     });
 
-    Quagga.onProcessed(this.onProcessed);
-
-    Quagga.onDetected(this.logCode);
-
+    Quagga.onProcessed((result) => this.onProcessed(result));
+    Quagga.onDetected((result) => this.logCode(result));
   }
 
   onProcessed(result: any) {
@@ -82,6 +79,6 @@ export class AppComponent implements OnInit {
 
   logCode(result) {
     this.lastResult = result.codeResult.code;
-    console.log(this);
+    this.ref.detectChanges();
   }
 }
